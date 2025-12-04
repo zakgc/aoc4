@@ -46,23 +46,25 @@ function getMatrixData(rollMatrix){
 
 let matrixData = getMatrixData(rollMatrix)
 
-let ans = 0
+function removeRolls(matrixData){
+    let ans = 0
+    matrixData.forEach(data => {
+        if(data.value !== '@') {
+            return
+        }
 
-matrixData.forEach(data => {
-    if(data.value !== '@') {
-        return
-    }
+        let adjRolls = 0
+        data.adjacent.forEach(ele => {
+            if(ele === '@'){
+                adjRolls += 1
+            }
+        })
 
-    let adjRolls = 0
-    data.adjacent.forEach(ele => {
-        if(ele === '@'){
-            adjRolls += 1
+        if (adjRolls < 4){
+            ans +=1
         }
     })
+    console.log(ans);
+}
 
-    if (adjRolls < 4){
-        ans +=1
-    }
-})
-
-console.log(ans);
+removeRolls(matrixData)
