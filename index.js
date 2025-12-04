@@ -44,10 +44,8 @@ function getMatrixData(rollMatrix){
     return matrixData
 }
 
-let matrixData = getMatrixData(rollMatrix)
-
-function removeRolls(matrixData){
-    let ans = 0
+function removeRolls(rollMatrix, matrixData){
+    let removed = 0
     matrixData.forEach(data => {
         if(data.value !== '@') {
             return
@@ -61,10 +59,23 @@ function removeRolls(matrixData){
         })
 
         if (adjRolls < 4){
-            ans +=1
+            removed +=1
+
+            rollMatrix[data.position.x][data.position.y] = '!'
         }
     })
-    console.log(ans);
+    return rollMatrix, removed
 }
 
-removeRolls(matrixData)
+let ans = 0
+for (let i = 0; i < 1000; i++) {
+    let matrixData = getMatrixData(rollMatrix)
+
+    rollMatrix, removed = removeRolls(rollMatrix, matrixData)
+    ans += removed
+
+    if (removed === 0) {
+        console.log(ans);
+        break
+    }
+}
