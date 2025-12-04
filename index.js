@@ -7,38 +7,44 @@ rollsArr.forEach(roll => {
     rollMatrix.push(roll.split(''))
 })
 
-let xLength = rollMatrix[0].length
-let yLength = rollMatrix.length
-
-let matrixData = []
 const directions = [
     [-1, -1], [0, -1], [1, -1],
     [-1, 0], [1, 0],
     [-1, 1], [0, 1], [1, 1]
 ]
 
-for (let x = 0; x < xLength; x++) {
-    for (let y = 0; y < yLength; y++) {
-        let adjacent = []
+function getMatrixData(rollMatrix){
+    let matrixData = []
+    let xLength = rollMatrix[0].length
+    let yLength = rollMatrix.length
 
-        for (const [dx, dy] of directions) {
-            const newX = parseInt(x + dx);
-            const newY = parseInt(y + dy);
+    for (let x = 0; x < xLength; x++) {
+        for (let y = 0; y < yLength; y++) {
+            let adjacent = []
 
-            if (newX >= 0 && newX < rollMatrix.length && newY >= 0 && newY < rollMatrix[0].length) {
-                adjacent.push(rollMatrix[newX][newY]);
+            for (const [dx, dy] of directions) {
+                const newX = parseInt(x + dx);
+                const newY = parseInt(y + dy);
+
+                if (newX >= 0 && newX < rollMatrix.length && newY >= 0 && newY < rollMatrix[0].length) {
+                    adjacent.push(rollMatrix[newX][newY]);
+                }
             }
-        }
 
-        matrixData.push({
-            position: {
-                x, y
-            },
-            value: rollMatrix[x][y],
-            adjacent
-        })
+            matrixData.push({
+                position: {
+                    x, y
+                },
+                value: rollMatrix[x][y],
+                adjacent
+            })
+        }
     }
+
+    return matrixData
 }
+
+let matrixData = getMatrixData(rollMatrix)
 
 let ans = 0
 
